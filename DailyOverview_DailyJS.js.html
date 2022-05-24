@@ -45,16 +45,27 @@ if (currentDateStr == 'html') {
 }
 console.log(currentDateStr);
 
-//set back button
-document.getElementById('monthView').children[0].href +=
-    '#' + currentDateStr.substring(0, 2) + '/' + currentDateStr.substring(6);
-
 let relative = 0;
 // Buttons
 const add = document.getElementById('addPhoto');
 const save = document.getElementById('save');
 const right = document.getElementById('right');
 const left = document.getElementById('left');
+const LENGTH_OF_YEAR_NUMBER = -4;
+const monthNames = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+];
 
 // store current day data to update when user leaves page
 let currentDay;
@@ -87,7 +98,35 @@ window.addEventListener('load', () => {
         };
         document.getElementById('date').innerHTML = 'Today: ' + currentDateStr;
     }
+
+    setMonthlyOverviewLink();
 });
+
+/**
+ * Sets the MonthlyOverview link to say '&lt;month> &lt;year> Overview' so that users
+ * clearly know what MonthOverview they are going to from DailyOverview page
+ * @returns void
+ */
+function setMonthlyOverviewLink() {
+    // get MonthlyOverview link in top left corner of DailyOverview screen
+    let monthlyOverviewLink = document.querySelector(
+        '#monthView > a:first-child'
+    );
+    // set the link to be to the month of the current DailyOverview
+    monthlyOverviewLink.href +=
+        '#' +
+        currentDateStr.substring(0, 2) +
+        '/' +
+        currentDateStr.substring(6);
+    /* set link text */
+    const monthString = currentDateStr.substring(
+        0,
+        currentDateStr.indexOf('/')
+    );
+    const month = monthNames[parseInt(monthString) - 1];
+    const year = currentDateStr.slice(LENGTH_OF_YEAR_NUMBER);
+    monthlyOverviewLink.textContent = `${month} ${year} Overview`;
+}
 
 /**
  * Gets the current day object (and creates one if one doesn't exist)
@@ -565,13 +604,13 @@ function renderPhotos(photos) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#collapsible_year_toggle">collapsible_year_toggle</a></li><li><a href="global.html#createDay">createDay</a></li><li><a href="global.html#createMonthlyGoals">createMonthlyGoals</a></li><li><a href="global.html#createSettings">createSettings</a></li><li><a href="global.html#createYearlyGoals">createYearlyGoals</a></li><li><a href="global.html#dayNumber">dayNumber</a></li><li><a href="global.html#db">db</a></li><li><a href="global.html#DB_NAME">DB_NAME</a></li><li><a href="global.html#DB_VERSION">DB_VERSION</a></li><li><a href="global.html#deleteDay">deleteDay</a></li><li><a href="global.html#deleteMockData">deleteMockData</a></li><li><a href="global.html#deleteMonthlyGoals">deleteMonthlyGoals</a></li><li><a href="global.html#deleteSettings">deleteSettings</a></li><li><a href="global.html#deleteYearlyGoals">deleteYearlyGoals</a></li><li><a href="global.html#editMockData">editMockData</a></li><li><a href="global.html#fetchMonthGoals">fetchMonthGoals</a></li><li><a href="global.html#fetchYearGoals">fetchYearGoals</a></li><li><a href="global.html#firstDow">firstDow</a></li><li><a href="global.html#getDay">getDay</a></li><li><a href="global.html#getDimensions">getDimensions</a></li><li><a href="global.html#getLoginState">getLoginState</a></li><li><a href="global.html#getMockData">getMockData</a></li><li><a href="global.html#getMonthlyGoals">getMonthlyGoals</a></li><li><a href="global.html#getSettings">getSettings</a></li><li><a href="global.html#getYearlyGoals">getYearlyGoals</a></li><li><a href="global.html#goHome">goHome</a></li><li><a href="global.html#handleLogin">handleLogin</a></li><li><a href="global.html#handleSignup">handleSignup</a></li><li><a href="global.html#initDay">initDay</a></li><li><a href="global.html#initDB">initDB</a></li><li><a href="global.html#initGoal">initGoal</a></li><li><a href="global.html#initMonth">initMonth</a></li><li><a href="global.html#initYear">initYear</a></li><li><a href="global.html#lastDow">lastDow</a></li><li><a href="global.html#monthNumber">monthNumber</a></li><li><a href="global.html#renderBullets">renderBullets</a></li><li><a href="global.html#renderChild">renderChild</a></li><li><a href="global.html#renderGoals">renderGoals</a></li><li><a href="global.html#renderPhotos">renderPhotos</a></li><li><a href="global.html#requestDay">requestDay</a></li><li><a href="global.html#setDB">setDB</a></li><li><a href="global.html#setNewUser">setNewUser</a></li><li><a href="global.html#setReturningUser">setReturningUser</a></li><li><a href="global.html#setSelected">setSelected</a></li><li><a href="global.html#setupCalendar">setupCalendar</a></li><li><a href="global.html#setUpMockData">setUpMockData</a></li><li><a href="global.html#storageSession">storageSession</a></li><li><a href="global.html#updateDay">updateDay</a></li><li><a href="global.html#updateMonthlyGoals">updateMonthlyGoals</a></li><li><a href="global.html#updateNote">updateNote</a></li><li><a href="global.html#updateSettings">updateSettings</a></li><li><a href="global.html#updateYearsGoals">updateYearsGoals</a></li><li><a href="global.html#verifyValidInputs">verifyValidInputs</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#collapsible_year_toggle">collapsible_year_toggle</a></li><li><a href="global.html#createDay">createDay</a></li><li><a href="global.html#createMonthlyGoals">createMonthlyGoals</a></li><li><a href="global.html#createSettings">createSettings</a></li><li><a href="global.html#createYearlyGoals">createYearlyGoals</a></li><li><a href="global.html#dayNumber">dayNumber</a></li><li><a href="global.html#db">db</a></li><li><a href="global.html#DB_NAME">DB_NAME</a></li><li><a href="global.html#DB_VERSION">DB_VERSION</a></li><li><a href="global.html#deleteDay">deleteDay</a></li><li><a href="global.html#deleteMonthlyGoals">deleteMonthlyGoals</a></li><li><a href="global.html#deleteSettings">deleteSettings</a></li><li><a href="global.html#deleteYearlyGoals">deleteYearlyGoals</a></li><li><a href="global.html#fetchMonthGoals">fetchMonthGoals</a></li><li><a href="global.html#fetchYearGoals">fetchYearGoals</a></li><li><a href="global.html#firstDow">firstDow</a></li><li><a href="global.html#getDay">getDay</a></li><li><a href="global.html#getDimensions">getDimensions</a></li><li><a href="global.html#getLoginState">getLoginState</a></li><li><a href="global.html#getMonthlyGoals">getMonthlyGoals</a></li><li><a href="global.html#getSettings">getSettings</a></li><li><a href="global.html#getYearlyGoals">getYearlyGoals</a></li><li><a href="global.html#goHome">goHome</a></li><li><a href="global.html#handleLogin">handleLogin</a></li><li><a href="global.html#handleSignup">handleSignup</a></li><li><a href="global.html#initDay">initDay</a></li><li><a href="global.html#initDB">initDB</a></li><li><a href="global.html#initGoal">initGoal</a></li><li><a href="global.html#initMonth">initMonth</a></li><li><a href="global.html#initYear">initYear</a></li><li><a href="global.html#lastDow">lastDow</a></li><li><a href="global.html#monthNumber">monthNumber</a></li><li><a href="global.html#renderBullets">renderBullets</a></li><li><a href="global.html#renderChild">renderChild</a></li><li><a href="global.html#renderGoals">renderGoals</a></li><li><a href="global.html#renderPhotos">renderPhotos</a></li><li><a href="global.html#requestDay">requestDay</a></li><li><a href="global.html#setDB">setDB</a></li><li><a href="global.html#setMonthlyOverviewLink">setMonthlyOverviewLink</a></li><li><a href="global.html#setNewUser">setNewUser</a></li><li><a href="global.html#setReturningUser">setReturningUser</a></li><li><a href="global.html#setSelected">setSelected</a></li><li><a href="global.html#setupCalendar">setupCalendar</a></li><li><a href="global.html#setYearlyOverviewLink">setYearlyOverviewLink</a></li><li><a href="global.html#storageSession">storageSession</a></li><li><a href="global.html#updateDay">updateDay</a></li><li><a href="global.html#updateMonthlyGoals">updateMonthlyGoals</a></li><li><a href="global.html#updateNote">updateNote</a></li><li><a href="global.html#updateSettings">updateSettings</a></li><li><a href="global.html#updateYearsGoals">updateYearsGoals</a></li><li><a href="global.html#verifyValidInputs">verifyValidInputs</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Mon May 16 2022 23:09:07 GMT+0000 (Coordinated Universal Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Tue May 24 2022 00:35:12 GMT+0000 (Coordinated Universal Time)
 </footer>
 
 <script> prettyPrint(); </script>
