@@ -36,19 +36,18 @@ class BulletEntry extends HTMLElement {
         template.innerHTML = `
             &lt;style>
                 .bullet{
-                    word-break: break-all;
+                    -word-break: break-all;
                     max-width: 100%;
-                    font-size: 2.3vh;
+                    font-size: 1rem;
                 }
                 .child{
                     padding-left: 2vw;
                 }
                 .bullet-container{
-                    display: inline-block; !important
+                    display: inline-block;
                 }
                 li > span {
                     position: relative;
-                    left: -5px;
                 }
                 ul {
                     padding: 0px 0px 0px 15px;
@@ -60,6 +59,7 @@ class BulletEntry extends HTMLElement {
                 .dropdownContainer {
                     position: relative;
                     display: inline-block;
+                    top: 5px;
                 }
                 .clicked {
                     background-color: #858585;
@@ -68,17 +68,25 @@ class BulletEntry extends HTMLElement {
                     display: none;
                     position: absolute;
                     background-color: #e4e4e4;
-                    min-width: 11vh;
                     z-index: 1;
-                    transform: translateY(-0.1vh);
+                    transform: translateX(-25%) translateY(-5px);
                 }
                 .dropdown p {
+                    position: relative;
                     color: black;
-                    font-size: 1.7vh;
-                    padding: 0.5vh 0.5vh 0.5vh 0.5vh;
-                    display: block;
+                    font-size: .85rem;
+                    padding: .25rem;
+                    display: flex;
+                    flex-direction: column;
+                    gap: .5rem;
+                    text-align: center;
+                    justify-content: space-evenly;
                     margin: 0;
                     background-color: #e4e4e4;
+                    width: min-content;
+                }
+                .dropdown p > img {
+                    height: 25px;
                 }
                 .dropdown p:hover {
                     background-color: #cecece;
@@ -98,16 +106,19 @@ class BulletEntry extends HTMLElement {
                     border-radius: 0.5vh;
                     cursor: pointer;
                 }
+                .dropdownButton > img {
+                    display: block;
+                }
                 #features {
                     width: 100%;
                     background: transparent;
                     border: none;
                     cursor: pointer;
-                    padding: 0.5vh;
                     background-color: #e4e4e4;
                     font-family: 'Courier', monospace;
                     font-weight: bold;
-                    font-size: 1.3vh;
+                    padding-top: .5rem;
+                    padding-bottom: .5rem;
                 }
                 img {
                     width: 100%;
@@ -124,15 +135,16 @@ class BulletEntry extends HTMLElement {
                         &lt;li>
                             &lt;span class="bullet-content">Setting text&lt;/span>
                         &lt;div class="dropdownContainer">
-                            &lt;button id="dropdownHover" class="dropdownButton">v&lt;/button>
+                            &lt;button id="dropdownHover" class="dropdownButton">
+                                &lt;img src="../Images/dropdown-icon.svg" alt="dropdown"/>
+                            &lt;/button>
                             &lt;div class="dropdown">
                                 &lt;div class="row">
-                                    &lt;p id="edit">&lt;img src="images/Edit.svg" alt="Edit">&lt;/p>
-                                    &lt;p id="delete">&lt;img src="images/Delete.svg" alt="Delete">&lt;/p>
-                                    &lt;p id="add">&lt;img src="images/Add.svg" alt="Add">&lt;/p>
-                                    &lt;p id="done">&lt;img src="images/Done.svg" alt="Done">&lt;/p>
+                                    &lt;p id="edit">&lt;img src="images/Edit.svg" alt="Edit">Edit&lt;/p>
+                                    &lt;p id="delete">&lt;img src="images/Delete.svg" alt="Delete">Delete&lt;/p>
+                                    &lt;p id="add">&lt;img src="images/Add.svg" alt="Add">Subtask&lt;/p>
+                                    &lt;p id="done">&lt;img src="images/Done.svg" alt="Done">Done&lt;/p>
                                 &lt;/div>
-                                &lt;div class="featuresContainer">
                                     &lt;select id="features"> 
                                         &lt;option id="normal" value="normal">Normal&lt;/option> 
                                         &lt;option id="important" value="important">Important&lt;/option>
@@ -142,7 +154,6 @@ class BulletEntry extends HTMLElement {
                                         &lt;option id="event" value="event">Event&lt;/option>
                                         &lt;option id="other" value="other">Other&lt;/option>
                                     &lt;/select>
-                                &lt;/div>
                             &lt;/div>
                         &lt;/div>
                         &lt;div class="child">&lt;/div>
@@ -240,8 +251,6 @@ class BulletEntry extends HTMLElement {
                 let newJson = JSON.parse(this.getAttribute('bulletJson'));
                 let selectElement = this.shadowRoot.querySelector('#features');
                 let output = selectElement.value;
-                console.log('debug shit');
-                console.log(newJson);
                 newJson.features = output;
                 this.setAttribute('bulletJson', JSON.stringify(newJson));
                 this.dispatchEvent(this.features);
@@ -300,9 +309,6 @@ class BulletEntry extends HTMLElement {
             console.log('testing');
         }
 
-        console.log('features');
-        console.log(entry.features);
-        console.log(this.shadowRoot.getElementById(entry.features));
         this.shadowRoot
             .getElementById(entry.features)
             .setAttribute('selected', 'true');
@@ -380,7 +386,7 @@ customElements.define('bullet-entry', BulletEntry);
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Thu Jun 02 2022 04:49:25 GMT+0000 (Coordinated Universal Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Sat Jun 04 2022 07:38:48 GMT+0000 (Coordinated Universal Time)
 </footer>
 
 <script> prettyPrint(); </script>
