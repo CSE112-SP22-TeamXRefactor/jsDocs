@@ -191,18 +191,16 @@ function setupCalendar() {
     const calTarget = document.getElementById('calendar');
 
     //get today code stolen from stackoverflow
-    // var today = new Date();
     let thisDate = new Date(
         currentMonth.substring(3) +
             '-' +
             currentMonth.substring(0, 2) +
             '-03T00:00:00.000-07:00'
     );
-    //thisDate = new Date('2021-05-23');
+
     console.log(currentMonth.substring(0, 2));
     console.log(thisDate);
 
-    //var curr_day_number = today.getDate();
     let currMonthNumber = thisDate.getMonth();
     let currYearNumber = thisDate.getFullYear();
 
@@ -250,11 +248,6 @@ function setupCalendar() {
         let day = document.createElement('li');
         day.classList.add('day');
         day.innerText = i;
-
-        //check if today (so we can highlight it)
-        // if (i == curr_day_number) {
-        //     day.classList.add('today');
-        // }
 
         // check if today so we can highlight it
         let today = new Date();
@@ -358,13 +351,13 @@ function dayNumber(day) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#collapsible_year_toggle">collapsible_year_toggle</a></li><li><a href="global.html#createDay">createDay</a></li><li><a href="global.html#createMonthlyGoals">createMonthlyGoals</a></li><li><a href="global.html#createSettings">createSettings</a></li><li><a href="global.html#createYearlyGoals">createYearlyGoals</a></li><li><a href="global.html#dayNumber">dayNumber</a></li><li><a href="global.html#db">db</a></li><li><a href="global.html#DB_NAME">DB_NAME</a></li><li><a href="global.html#DB_VERSION">DB_VERSION</a></li><li><a href="global.html#deleteDay">deleteDay</a></li><li><a href="global.html#deleteMonthlyGoals">deleteMonthlyGoals</a></li><li><a href="global.html#deleteSettings">deleteSettings</a></li><li><a href="global.html#deleteYearlyGoals">deleteYearlyGoals</a></li><li><a href="global.html#fetchMonthGoals">fetchMonthGoals</a></li><li><a href="global.html#fetchYearGoals">fetchYearGoals</a></li><li><a href="global.html#firstDow">firstDow</a></li><li><a href="global.html#getDay">getDay</a></li><li><a href="global.html#getDimensions">getDimensions</a></li><li><a href="global.html#getLoginState">getLoginState</a></li><li><a href="global.html#getMonthlyGoals">getMonthlyGoals</a></li><li><a href="global.html#getSettings">getSettings</a></li><li><a href="global.html#getYearlyGoals">getYearlyGoals</a></li><li><a href="global.html#goHome">goHome</a></li><li><a href="global.html#handleLogin">handleLogin</a></li><li><a href="global.html#handleSignup">handleSignup</a></li><li><a href="global.html#initDay">initDay</a></li><li><a href="global.html#initDB">initDB</a></li><li><a href="global.html#initGoal">initGoal</a></li><li><a href="global.html#initMonth">initMonth</a></li><li><a href="global.html#initYear">initYear</a></li><li><a href="global.html#lastDow">lastDow</a></li><li><a href="global.html#loginState">loginState</a></li><li><a href="global.html#monthNumber">monthNumber</a></li><li><a href="global.html#renderBullets">renderBullets</a></li><li><a href="global.html#renderChild">renderChild</a></li><li><a href="global.html#renderGoals">renderGoals</a></li><li><a href="global.html#renderPhotos">renderPhotos</a></li><li><a href="global.html#requestDay">requestDay</a></li><li><a href="global.html#setDB">setDB</a></li><li><a href="global.html#setMonthlyOverviewLink">setMonthlyOverviewLink</a></li><li><a href="global.html#setNewUser">setNewUser</a></li><li><a href="global.html#setReturningUser">setReturningUser</a></li><li><a href="global.html#setSelected">setSelected</a></li><li><a href="global.html#setupCalendar">setupCalendar</a></li><li><a href="global.html#setYearlyOverviewLink">setYearlyOverviewLink</a></li><li><a href="global.html#updateDay">updateDay</a></li><li><a href="global.html#updateMonthlyGoals">updateMonthlyGoals</a></li><li><a href="global.html#updateNote">updateNote</a></li><li><a href="global.html#updateSettings">updateSettings</a></li><li><a href="global.html#updateYearsGoals">updateYearsGoals</a></li><li><a href="global.html#verifyValidInputs">verifyValidInputs</a></li><li><a href="global.html#.href">.href</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#collapsible_year_toggle">collapsible_year_toggle</a></li><li><a href="global.html#createDay">createDay</a></li><li><a href="global.html#createMonthlyGoals">createMonthlyGoals</a></li><li><a href="global.html#createSettings">createSettings</a></li><li><a href="global.html#createYearlyGoals">createYearlyGoals</a></li><li><a href="global.html#dayNumber">dayNumber</a></li><li><a href="global.html#db">db</a></li><li><a href="global.html#DB_NAME">DB_NAME</a></li><li><a href="global.html#DB_VERSION">DB_VERSION</a></li><li><a href="global.html#deleteDay">deleteDay</a></li><li><a href="global.html#deleteMonthlyGoals">deleteMonthlyGoals</a></li><li><a href="global.html#deleteSettings">deleteSettings</a></li><li><a href="global.html#deleteYearlyGoals">deleteYearlyGoals</a></li><li><a href="global.html#fetchMonthGoals">fetchMonthGoals</a></li><li><a href="global.html#fetchYearGoals">fetchYearGoals</a></li><li><a href="global.html#firstDow">firstDow</a></li><li><a href="global.html#getDay">getDay</a></li><li><a href="global.html#getDimensions">getDimensions</a></li><li><a href="global.html#getLoginState">getLoginState</a></li><li><a href="global.html#getMonthlyGoals">getMonthlyGoals</a></li><li><a href="global.html#getSettings">getSettings</a></li><li><a href="global.html#getYearlyGoals">getYearlyGoals</a></li><li><a href="global.html#goHome">goHome</a></li><li><a href="global.html#handleLogin">handleLogin</a></li><li><a href="global.html#handleLoginButton">handleLoginButton</a></li><li><a href="global.html#handleResetPassword">handleResetPassword</a></li><li><a href="global.html#handleSignup">handleSignup</a></li><li><a href="global.html#initDay">initDay</a></li><li><a href="global.html#initDB">initDB</a></li><li><a href="global.html#initGoal">initGoal</a></li><li><a href="global.html#initMonth">initMonth</a></li><li><a href="global.html#initYear">initYear</a></li><li><a href="global.html#lastDow">lastDow</a></li><li><a href="global.html#loginState">loginState</a></li><li><a href="global.html#monthNumber">monthNumber</a></li><li><a href="global.html#renderBullets">renderBullets</a></li><li><a href="global.html#renderChild">renderChild</a></li><li><a href="global.html#renderGoals">renderGoals</a></li><li><a href="global.html#renderPhotos">renderPhotos</a></li><li><a href="global.html#requestDay">requestDay</a></li><li><a href="global.html#setDB">setDB</a></li><li><a href="global.html#setMonthlyOverviewLink">setMonthlyOverviewLink</a></li><li><a href="global.html#setNewUser">setNewUser</a></li><li><a href="global.html#setReturningUser">setReturningUser</a></li><li><a href="global.html#setSelected">setSelected</a></li><li><a href="global.html#setupCalendar">setupCalendar</a></li><li><a href="global.html#setYearlyOverviewLink">setYearlyOverviewLink</a></li><li><a href="global.html#updateDay">updateDay</a></li><li><a href="global.html#updateMonthlyGoals">updateMonthlyGoals</a></li><li><a href="global.html#updateNote">updateNote</a></li><li><a href="global.html#updateSettings">updateSettings</a></li><li><a href="global.html#updateYearsGoals">updateYearsGoals</a></li><li><a href="global.html#.href">.href</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Sun Jun 05 2022 02:13:29 GMT+0000 (Coordinated Universal Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Mon Jun 06 2022 01:12:56 GMT+0000 (Coordinated Universal Time)
 </footer>
 
 <script> prettyPrint(); </script>
