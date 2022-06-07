@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Index/CustomElements.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Index/CustomElements.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>//
+//
+// Consts and helper functions
+//
+//
+
+const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+];
+
+function monthNumber(month) {
+    if (month > 8) {
+        return '' + (month + 1);
+    } else {
+        return '0' + (month + 1);
+    }
+}
+
+const month_OV_link = '../MonthlyOverview/MonthlyOverview.html';
+const year_OV_link = '../YearlyOverview/YearlyOverview.html';
+
+//
+//
+// Calendar Elements
+//
+//
+
+/**
+ * One day on the calendar. Programmatically assigned a number, or left blank for padding.
+ */
+class CalendarSquare extends HTMLElement {
+    constructor() {
+        super();
+        this.setAttribute('class', 'day');
+    }
+}
+window.customElements.define('day-item', CalendarSquare);
+
+/**
+ * The big title above the calendar with the name of the month
+ */
+class MonthHeader extends HTMLElement {
+    constructor() {
+        super();
+        this.setAttribute('id', 'month_header');
+    }
+}
+window.customElements.define('month-header', MonthHeader);
+
+//
+//
+// Content Elements
+//
+//
+
+// Hierarchy (copied during i7 refactor from Calendar.js):
+//
+//  -year wrapper
+//      -year nav
+//          -collapse button
+//          -year link
+//      -months div
+//          -month link
+//          -month link
+//          -month link
+//          -...
+//  -year wrapper
+//      -...
+//  -year wrapper
+//      -...
+//  -...
+
+/**
+ * A Month Link links to a monthly overview page. It is a child of a Months Div.
+ */
+class MonthLink extends HTMLAnchorElement {
+    constructor() {
+        super();
+    }
+}
+window.customElements.define('month-link', MonthLink, { extends: 'a' });
+
+/**
+ * Months Div contains 12 month links. It is a child of Year Wrapper. It is shown or hidden by its nephew Coll Button.
+ */
+class MonthsDiv extends HTMLElement {
+    constructor() {
+        super();
+        this.attachShadow({ mode: 'open' });
+
+        //make the stylesheet apply to this element's children
+        let style = document.createElement('link');
+        style.setAttribute('rel', 'stylesheet');
+        style.setAttribute('href', 'IndexStyles.css');
+        this.shadowRoot.append(style);
+
+        this.setAttribute('id', this.parentElement.id.substring(5) + '_months');
+
+        //add twelve month children
+        for (let m = 0; m &lt; 12; m++) {
+            let month_child = document.createElement('a');
+            month_child.setAttribute('is', 'month-link');
+            let month_name_lc = months[m].toLowerCase();
+            month_child.setAttribute('class', 'monthlink ' + month_name_lc);
+            let yr = this.id.substring(0, 4);
+            month_child.setAttribute('id', yr + '_' + month_name_lc);
+            month_child.setAttribute(
+                'href',
+                month_OV_link + '#' + monthNumber(m) + '/' + yr
+            );
+            month_child.innerText = months[m];
+            this.setAttribute('class', 'collapsible_child');
+            this.shadowRoot.append(month_child);
+        }
+    }
+}
+window.customElements.define('months-div', MonthsDiv);
+
+/**
+ * Year Link is a link to a yearly overview. It is a child of Year Wrapper.
+ */
+class YearLink extends HTMLAnchorElement {
+    constructor() {
+        super();
+        //get year from grandparent
+        let yr = this.parentElement.parentElement.id.substring(5);
+        //populate attributes
+        this.setAttribute('id', 'year_' + yr + '_link');
+        this.setAttribute('class', 'yearlink');
+        this.setAttribute('href', year_OV_link + '#' + yr);
+        //this.setAttribute('innerText', yr + ' Yearly Overview');
+        this.innerText = yr + ' Yearly Overview';
+    }
+}
+window.customElements.define('year-link', YearLink, { extends: 'a' });
+
+/**
+ * Coll Button is a child of Year Nav. Coll Button collapses its uncle Months Div (they have the same year)
+ */
+class CollButton extends HTMLButtonElement {
+    constructor() {
+        super();
+        //set attributes
+        this.innerText = '';
+        this.setAttribute('class', 'coll_yr_button');
+        this.setAttribute(
+            'id',
+            this.parentElement.parentElement.id.substring(5) + '_button'
+        );
+        //add triangle icon
+        let dropdownIcon = document.createElement('img');
+        dropdownIcon.src = '../Images/dropdown-icon.svg';
+        dropdownIcon.alt = 'dropdown';
+        this.appendChild(dropdownIcon);
+    }
+}
+window.customElements.define('coll-button', CollButton, { extends: 'button' });
+
+/**
+ * YearNav contains a Coll Button and a Year Link. It is a child of Year Wrapper.
+ */
+class YearNav extends HTMLDivElement {
+    constructor() {
+        super();
+        //attributes
+        this.setAttribute('class', 'year collapsible horiz');
+        this.setAttribute('id', this.parentElement.id.substring(5) + '_nav');
+    }
+}
+window.customElements.define('year-nav', YearNav, { extends: 'div' });
+
+/**
+ * Year Wrapper: top-level element. Contains a Year Nav and a Months Div.
+ */
+class YearWrapper extends HTMLElement {
+    constructor() {
+        super();
+    }
+}
+window.customElements.define('year-wrapper', YearWrapper);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="CalendarSquare.html">CalendarSquare</a></li><li><a href="CollButton.html">CollButton</a></li><li><a href="MonthHeader.html">MonthHeader</a></li><li><a href="MonthLink.html">MonthLink</a></li><li><a href="MonthsDiv.html">MonthsDiv</a></li><li><a href="YearLink.html">YearLink</a></li><li><a href="YearNav.html">YearNav</a></li><li><a href="YearWrapper.html">YearWrapper</a></li></ul><h3>Global</h3><ul><li><a href="global.html#collapsible_year_toggle">collapsible_year_toggle</a></li><li><a href="global.html#createDay">createDay</a></li><li><a href="global.html#createMonthlyGoals">createMonthlyGoals</a></li><li><a href="global.html#createSettings">createSettings</a></li><li><a href="global.html#createYearlyGoals">createYearlyGoals</a></li><li><a href="global.html#dayNumber">dayNumber</a></li><li><a href="global.html#db">db</a></li><li><a href="global.html#DB_NAME">DB_NAME</a></li><li><a href="global.html#DB_VERSION">DB_VERSION</a></li><li><a href="global.html#deleteDay">deleteDay</a></li><li><a href="global.html#deleteMonthlyGoals">deleteMonthlyGoals</a></li><li><a href="global.html#deleteSettings">deleteSettings</a></li><li><a href="global.html#deleteYearlyGoals">deleteYearlyGoals</a></li><li><a href="global.html#fetchMonthGoals">fetchMonthGoals</a></li><li><a href="global.html#fetchYearGoals">fetchYearGoals</a></li><li><a href="global.html#firstDow">firstDow</a></li><li><a href="global.html#getDay">getDay</a></li><li><a href="global.html#getDimensions">getDimensions</a></li><li><a href="global.html#getLoginState">getLoginState</a></li><li><a href="global.html#getMonthlyGoals">getMonthlyGoals</a></li><li><a href="global.html#getSettings">getSettings</a></li><li><a href="global.html#getYearlyGoals">getYearlyGoals</a></li><li><a href="global.html#goHome">goHome</a></li><li><a href="global.html#handleLogin">handleLogin</a></li><li><a href="global.html#handleLoginButton">handleLoginButton</a></li><li><a href="global.html#handleResetPassword">handleResetPassword</a></li><li><a href="global.html#handleSignup">handleSignup</a></li><li><a href="global.html#initDay">initDay</a></li><li><a href="global.html#initDB">initDB</a></li><li><a href="global.html#initGoal">initGoal</a></li><li><a href="global.html#initMonth">initMonth</a></li><li><a href="global.html#initYear">initYear</a></li><li><a href="global.html#lastDow">lastDow</a></li><li><a href="global.html#loginState">loginState</a></li><li><a href="global.html#monthNumber">monthNumber</a></li><li><a href="global.html#renderBullets">renderBullets</a></li><li><a href="global.html#renderChild">renderChild</a></li><li><a href="global.html#renderGoals">renderGoals</a></li><li><a href="global.html#renderPhotos">renderPhotos</a></li><li><a href="global.html#requestDay">requestDay</a></li><li><a href="global.html#setDB">setDB</a></li><li><a href="global.html#setMonthlyOverviewLink">setMonthlyOverviewLink</a></li><li><a href="global.html#setNewUser">setNewUser</a></li><li><a href="global.html#setReturningUser">setReturningUser</a></li><li><a href="global.html#setSelected">setSelected</a></li><li><a href="global.html#setupCalendar">setupCalendar</a></li><li><a href="global.html#setYearlyOverviewLink">setYearlyOverviewLink</a></li><li><a href="global.html#updateDay">updateDay</a></li><li><a href="global.html#updateMonthlyGoals">updateMonthlyGoals</a></li><li><a href="global.html#updateNote">updateNote</a></li><li><a href="global.html#updateSettings">updateSettings</a></li><li><a href="global.html#updateYearsGoals">updateYearsGoals</a></li><li><a href="global.html#validateURL">validateURL</a></li><li><a href="global.html#.href">.href</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Tue Jun 07 2022 00:49:45 GMT+0000 (Coordinated Universal Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
